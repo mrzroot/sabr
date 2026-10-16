@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en" dir="ltr" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>sabr · downloads that never start over</title>
+<meta name="description" content="sabr makes git clone, docker pull and file downloads resumable on slow, throttled and unreliable connections. A drop costs seconds, not the whole download. Open source, single binary.">
+<meta property="og:title" content="sabr · downloads that never start over">
+<meta property="og:description" content="Resumable git clone, docker pull and downloads for bad networks. Plain git fails through a link that drops every 2 MB; sabr finishes.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="site.css">
+<script>
+(function(){var t=localStorage.getItem('sabr-theme');if(!t)t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.dataset.theme=t;
+var l=localStorage.getItem('sabr-lang')||((navigator.language||'').slice(0,2)==='fa'?'fa':'en');if(l==='fa'){document.documentElement.lang='fa';document.documentElement.dir='rtl';}})();
+</script>
+</head>
+<body>
+<div class="sky" aria-hidden="true"><div class="stars"></div><svg class="dunes" viewBox="0 0 1440 320" preserveAspectRatio="none"><path class="d1" d="M0 220c180-60 360-80 560-40s380 70 560 20 260-60 320-50v170H0z"/><path class="d2" d="M0 260c200-30 420-40 640-10s420 40 580 10 200-20 220-20v80H0z"/></svg></div>
+<a class="skip" href="#race" data-i18n="skip">Skip to the demo</a>
+<header class="top">
+  <a class="brand" href="#"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12M6 21h12M7 3c0 6 10 6 10 9s-10 3-10 9M17 3c0 6-10 6-10 9s10 3 10 9"/></svg><b>sabr</b><span>صبر</span></a>
+  <nav class="nav" aria-label="Sections"><a href="#race" data-i18n="nav.demo">Demo</a><a href="#install" data-i18n="nav.install">Install</a><a href="#how" data-i18n="nav.how">How</a><a href="#proof" data-i18n="nav.proof">Proof</a><a href="https://github.com/mrzroot/sabr">GitHub</a></nav>
+  <div class="toggles">
+    <button class="tog" id="lang" type="button" aria-label="فارسی / English"><span class="en-only">فا</span><span class="fa-only">EN</span></button>
+    <button class="tog" id="theme" type="button" aria-label="Toggle light and dark"><svg class="sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 1.5v3M12 19.5v3M1.5 12h3M19.5 12h3M4.6 4.6l2.1 2.1M17.3 17.3l2.1 2.1M4.6 19.4l2.1-2.1M17.3 6.7l2.1-2.1"/></svg><svg class="moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"/></svg></button>
+  </div>
+</header>
+
+<main>
+<section class="hero">
+  <p class="kicker" data-i18n="hero.kicker">for slow, throttled and unreliable connections</p>
+  <h1 data-i18n-html="hero.title">Downloads that<br><span>never start over.</span></h1>
+  <p class="lede" data-i18n="hero.lede">git clone, docker pull and big downloads are all-or-nothing: one dropped connection at 97% and you start again from zero. sabr splits them into small, resumable steps, so a drop costs a few seconds instead of the whole download. It even survives a reboot.</p>
+  <div class="install" id="install">
+    <div class="tabs" role="tablist">
+      <button role="tab" aria-selected="true" data-cmd="curl -fsSL https://mrzroot.github.io/sabr/install.sh | sh">macOS · Linux</button>
+      <button role="tab" aria-selected="false" data-cmd="irm https://mrzroot.github.io/sabr/install.ps1 | iex">Windows</button>
+      <button role="tab" aria-selected="false" data-cmd="go install github.com/mrzroot/sabr/cmd/sabr@latest">Go</button>
+    </div>
+    <div class="cmd"><code id="cmd">curl -fsSL https://mrzroot.github.io/sabr/install.sh | sh</code><button class="copy" type="button" data-copy="#cmd" data-i18n="copy">Copy</button></div>
+    <p class="fine" data-i18n="install.fine">The installer is resumable too, and it checks SHA-256. Single static binary; only needs git (for clone) and nothing else.</p>
+  </div>
+  <div class="swap" dir="ltr">
+    <div><span class="no">git clone</span><span class="arrow">→</span><span class="yes">sabr clone</span></div>
+    <div><span class="no">docker pull</span><span class="arrow">→</span><span class="yes">sabr docker pull --load</span></div>
+    <div><span class="no">curl -O</span><span class="arrow">→</span><span class="yes">sabr get --sha256</span></div>
+  </div>
+</section>
+
+<section class="race" id="race">
+  <div class="head">
+    <h2 data-i18n="race.title">Race them on a bad link</h2>
+    <p data-i18n="race.sub">An interactive simulation of how each tool behaves on a link that drops. The real run, with real numbers, is further down.</p>
+    <span class="badge" data-i18n="race.badge">Simulation</span>
+  </div>
+  <div class="controls">
+    <label><span data-i18n="race.what">What</span>
+      <select id="what">
+        <option value="80" data-i18n="race.o1">cli/cli repo (~80 MB)</option>
+        <option value="350" data-i18n="race.o2">react repo (~350 MB)</option>
+        <option value="600" data-i18n="race.o3">a 600 MB Docker layer</option>
+        <option value="5000" data-i18n="race.o4">linux kernel (~5 GB)</option>
+      </select></label>
+    <label><span data-i18n="race.drop">Connection drops every</span> <output id="dropv">20 MB</output><input type="range" id="drop" min="1" max="200" value="20"></label>
+    <label><span data-i18n="race.speed">Speed</span> <output id="speedv">4 Mbit/s</output><input type="range" id="speed" min="1" max="100" value="4"></label>
+    <button type="button" class="btn" id="go" data-i18n="race.go">Start</button>
+  </div>
+  <div class="lanes">
+    <div class="lane git">
+      <div class="lane-head"><b>git clone</b><span id="git-state" class="state"></span></div>
+      <div class="track"><div class="fill" id="git-fill"></div><div class="ghost" id="git-ghost"></div></div>
+      <div class="meta"><span id="git-pct">0%</span><span id="git-info"></span></div>
+      <pre class="log" id="git-log" dir="ltr"></pre>
+    </div>
+    <div class="lane sabr">
+      <div class="lane-head"><b>sabr clone</b><span id="sabr-state" class="state"></span></div>
+      <div class="track"><div class="fill" id="sabr-fill"></div><div class="ticks" id="sabr-ticks"></div></div>
+      <div class="meta"><span id="sabr-pct">0%</span><span id="sabr-info"></span></div>
+      <pre class="log" id="sabr-log" dir="ltr"></pre>
+    </div>
+  </div>
+  <p class="fine" data-i18n="race.note">Time is sped up. Each tool's behaviour is simplified: git restarts the pack from zero after a drop; sabr loses only the step in flight, retries with backoff and halves the step size.</p>
+</section>
+
+<section class="how" id="how">
+  <h2 data-i18n="how.title">How sabr clone works</h2>
+  <ol class="steps">
+    <li><b>1</b><h3 data-i18n="how.s1t">Latest commit</h3><p data-i18n="how.s1">A blobless, depth-1 fetch: just commits and folders, a few hundred KB.</p></li>
+    <li><b>2</b><h3 data-i18n="how.s2t">History, in steps</h3><p data-i18n="how.s2">It deepens history step by step. The step size doubles after a success and halves after a drop.</p></li>
+    <li><b>3</b><h3 data-i18n="how.s3t">Files, in batches</h3><p data-i18n="how.s3">It lists the missing blobs and fetches them in adaptive batches. Any file that keeps failing is downloaded by byte range and hash-checked.</p></li>
+    <li><b>4</b><h3 data-i18n="how.s4t">A normal repo</h3><p data-i18n="how.s4">Then it checks out, sets the upstream and origin/HEAD, and you have the same result as git clone. Progress is saved in .git/sabr.json, so a kill or reboot just resumes.</p></li>
+  </ol>
+  <div class="cards">
+    <article><h3>sabr docker pull</h3><p data-i18n="how.docker">Talks to the registry directly, resumes each layer from the byte it stopped at, and keeps a shared layer cache. It writes a docker load archive; add --load to load it into Docker or Podman. No daemon changes.</p><pre dir="ltr"><code>$ sabr docker pull python:3.12-slim --load
+  ✓ 41.3 MiB, 39 resumes</code></pre></article>
+    <article><h3>sabr get</h3><p data-i18n="how.get">Byte-range resume across runs. It restarts if the file changed on the server, has a stall watchdog, and verifies SHA-256.</p><pre dir="ltr"><code>$ sabr get https://nodejs.org/…/node.tar.xz \
+    --sha256 3b1c…</code></pre></article>
+    <article><h3>sabr chaos</h3><p data-i18n="how.chaos">A built-in bad link: a local proxy that cuts or freezes every connection after N bytes. Use it to test your own tools.</p><pre dir="ltr"><code>$ sabr chaos --listen 127.0.0.1:8899 --cut 2MB</code></pre></article>
+  </div>
+</section>
+
+<section class="proof" id="proof">
+  <h2 data-i18n="proof.title">A real run, not a simulation</h2>
+  <p class="sub" data-i18n="proof.sub">GitHub's cli/cli (12,357 commits) through a proxy that cuts every connection after about 2 MB. The same test runs in CI on every push.</p>
+  <pre class="term" dir="ltr"><code><span class="c">$ git -c http.proxy=http://127.0.0.1:8899 clone https://github.com/cli/cli</span>
+<span class="err">fatal: early EOF
+fatal: fetch-pack: invalid index-pack output</span>              <span class="c">← back to 0%, every time</span>
+
+<span class="c">$ HTTPS_PROXY=http://127.0.0.1:8899 sabr clone https://github.com/cli/cli</span>
+==> Fetching history in resumable steps (commits and folders only)
+    +64 commits (65 so far)
+  ! step of 128 commits failed (early EOF); next try 64 commits in 985ms
+    …
+==> Fetching files of the latest commit: 1506 to go
+    256/1506 files (16%)
+  ! batch of 512 files failed (early EOF); next batch 128 files in 927ms
+    …
+==> Checking out trunk
+<span class="ok">  ✓ done: cli (49s, 27 steps, 17 drops survived, 14.0 MiB received)</span></code></pre>
+  <div class="table-wrap"><table>
+    <thead><tr><th></th><th data-i18n="cmp.drop">survives a drop</th><th data-i18n="cmp.kill">survives kill/reboot</th><th data-i18n="cmp.auto">automatic</th><th data-i18n="cmp.git">git history</th><th data-i18n="cmp.docker">docker image</th><th data-i18n="cmp.file">single file</th></tr></thead>
+    <tbody>
+      <tr><th>git clone</th><td>✗</td><td>✗</td><td>–</td><td>✓</td><td></td><td></td></tr>
+      <tr><th>git backfill (2.49+)</th><td data-i18n="cmp.old">old blobs only</td><td data-i18n="cmp.old">old blobs only</td><td>✓</td><td data-i18n="cmp.needs">needs a finished blobless clone</td><td></td><td></td></tr>
+      <tr><th><a href="https://stackoverflow.com/questions/79852493">SO sparse-checkout script</a></th><td data-i18n="cmp.files">files only</td><td data-i18n="cmp.files">files only</td><td>~</td><td data-i18n="cmp.oneshot">metadata is still one shot</td><td></td><td></td></tr>
+      <tr><th>docker pull</th><td>✗</td><td>✗</td><td>–</td><td></td><td>✓</td><td></td></tr>
+      <tr><th>containerd snapshotter</th><td>✓</td><td>✓</td><td>✓</td><td></td><td data-i18n="cmp.daemon">✓ daemon config change</td><td></td></tr>
+      <tr><th>wget -c / aria2</th><td>✓</td><td>✓</td><td>✓</td><td></td><td></td><td>✓</td></tr>
+      <tr class="us"><th>sabr</th><td>✓</td><td>✓</td><td>✓</td><td>✓</td><td data-i18n="cmp.any">✓ any machine</td><td>✓</td></tr>
+    </tbody>
+  </table></div>
+  <ul class="verified">
+    <li data-i18n="v.1">CI, real GitHub: plain git fails through the 2 MB-cut proxy; sabr's result matches ls-remote, with more than 5,000 commits and the tags.</li>
+    <li data-i18n="v.2">CI, real Docker Hub: python:3.12-slim through the same proxy, then docker load and docker run.</li>
+    <li data-i18n="v.3">e2e: kill -9 mid-clone, run the same command, it finishes with a clean tree.</li>
+    <li data-i18n="v.4">Tests on Linux, macOS and Windows; installers tested in a fresh HOME and on PowerShell 5.1 and 7; a tampered binary is refused.</li>
+  </ul>
+</section>
+</main>
+<footer class="foot">
+  <span>sabr 0.1.0 · MIT · <a href="https://github.com/mrzroot">Mohammadreza Zare (M-R-Z)</a></span>
+  <span><a href="https://github.com/mrzroot/sabr">GitHub</a> · <a href="https://github.com/mrzroot/sabr/blob/main/README.fa.md">README فارسی</a> · <a href="https://mrzroot.github.io/">mrzroot.github.io</a></span>
+</footer>
+<script src="site.js"></script>
+</body>
+</html>
