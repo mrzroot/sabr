@@ -104,7 +104,8 @@ jobs:
           grep -q '.local/bin' "$h/.profile"
       - name: a tampered binary is refused
         run: |
-          printf 'evil' >> dist/sabr_*_$( [ "$(uname -m)" = arm64 ] && echo arm64 || echo amd64 )
+          os=$(uname -s | tr '[:upper:]' '[:lower:]'); arch=$( [ "$(uname -m)" = arm64 ] || [ "$(uname -m)" = aarch64 ] && echo arm64 || echo amd64 )
+          printf 'evil' >> "dist/sabr_${os}_${arch}"
           h=$(mktemp -d)
           if env -i HOME="$h" PATH=/usr/bin:/bin SABR_BASE_URL="file://$PWD/dist" sh docs/install.sh; then echo "::error::tampered binary installed"; exit 1; fi
 

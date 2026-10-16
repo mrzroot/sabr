@@ -118,7 +118,6 @@ func TestPullThroughDrops(t *testing.T) {
 	}
 	// the archive: every blob present and intact, both manifest formats
 	f, _ := os.Open(o.Output)
-	defer f.Close()
 	tr := tar.NewReader(f)
 	files := map[string][]byte{}
 	for {
@@ -132,6 +131,7 @@ func TestPullThroughDrops(t *testing.T) {
 		b, _ := io.ReadAll(tr)
 		files[h.Name] = b
 	}
+	f.Close() // Windows cannot replace an open file on the second pull
 	for d, b := range blobs {
 		got := files["blobs/sha256/"+strings.TrimPrefix(d, "sha256:")]
 		if !bytes.Equal(got, b) {
