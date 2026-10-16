@@ -190,13 +190,30 @@ func TestAllBlobsIsAComplete(t *testing.T) {
 func TestKilledCloneResumes(t *testing.T) {
 	root := t.TempDir()
 	src := makeRepo(t, root, 100)
-	addr, _ := flaky(t, daemon(t, root), 200<<10, 2*time.Millisecond)
+	addr, _ := flaky(t, daemon(t, root), 200<<10, 15*time.Millisecond)
 	dst := filepath.Join(root, "dst")
 	url := "git://" + addr + "/src.git"
-	// hard-kill sabr part way through (like a laptop lid or a power cut)
-	sabr(t, 2500*time.Millisecond, "clone", url, dst)
-	if _, err := os.Stat(filepath.Join(dst, ".git", "sabr.json")); err != nil {
-		t.Fatal("no state file after the kill")
+	// hard-kill sabr part way through (like a laptop lid or a power cut), once it has saved progress
+	cmd := exec.Command(bin, "clone", url, dst)
+	cmd.Env = append(os.Environ(), "SABR_RETRY_BASE=20ms")
+	if err := cmd.Start(); err != nil {
+		t.Fatal(err)
+	}
+	deadline := time.Now().Add(2 * time.Minute)
+	for {
+		b, _ := os.ReadFile(filepath.Join(dst, ".git", "sabr.json"))
+		if strings.Contains(string(b), `"steps": 2`) {
+			break
+		}
+		if time.Now().After(deadline) {
+			t.Fatal("clone made no progress")
+		}
+		time.Sleep(20 * time.Millisecond)
+	}
+	cmd.Process.Kill()
+	cmd.Wait()
+	if b, _ := os.ReadFile(filepath.Join(dst, ".git", "sabr.json")); strings.Contains(string(b), `"phase": "done"`) {
+		t.Fatal("finished before the kill; nothing to resume")
 	}
 	log, err := sabr(t, 5*time.Minute, "clone", url, dst)
 	if err != nil {

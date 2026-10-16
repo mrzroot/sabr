@@ -14,21 +14,26 @@ Resumable `git clone`, `docker pull` and file downloads for slow, throttled and 
 </div>
 
 ```text
-$ git clone https://github.com/cli/cli
-Receiving objects:  71% (61042/85974), 58.10 MiB | 410 KiB/s
-fatal: early EOF                                   ← the connection dropped. Start again from 0%.
+$ git -c http.proxy=http://127.0.0.1:8899 clone https://github.com/cli/cli     # a link that drops every ~2 MB
+fatal: early EOF
+fatal: fetch-pack: invalid index-pack output              ← back to 0%, every time
 
-$ sabr clone https://github.com/cli/cli
+$ HTTPS_PROXY=http://127.0.0.1:8899 sabr clone https://github.com/cli/cli
 ==> Fetching history in resumable steps (commits and folders only)
     +64 commits (65 so far)
-    +128 commits (193 so far)
-  ! step of 512 commits failed (early EOF); next try 256 commits in 1s
-    +256 commits (449 so far)
+  ! step of 128 commits failed (early EOF); next try 64 commits in 985ms
+    +64 commits (129 so far)
     …
-==> Fetching files of the latest commit: 1312 to go
-    1312/1312 files (100%)
-  ✓ done: cli (3m12s, 41 steps, 17 drops survived, 96.1 MiB received)
+==> Fetching files of the latest commit: 1506 to go
+    256/1506 files (16%)
+  ! batch of 512 files failed (early EOF); next batch 128 files in 927ms
+    …
+==> pkg/cmd/attestation/test/data/gh_2.60.1_windows_arm64.zip keeps dropping over git; downloading it in byte ranges instead
+==> Checking out trunk
+  ✓ done: cli (49s, 27 steps, 17 drops survived, 14.0 MiB received)     ← 12,357 commits, clean tree, same HEAD
 ```
+
+(A real run, trimmed. `sabr chaos` is the bad link; see below.)
 
 `git clone` is all-or-nothing: one pack, one connection, and when that connection drops at 97 %
 everything is thrown away. `docker pull` on the default image store does the same to a 600 MB layer.
@@ -145,7 +150,7 @@ over when the server says the file changed, and verifies `--sha256`.
 | `kill -9` mid-clone, then the same command resumes and finishes | e2e |
 | `sabr pull` brings new commits through the bad link; fast-forward | e2e |
 | Missing repositories fail fast instead of retrying forever | e2e |
-| Real GitHub (`cli/cli`, 8 000+ commits) through a 2 MB-cut proxy: plain git fails, sabr matches `ls-remote` | CI `real-network` job |
+| Real GitHub (`cli/cli`, 12 000+ commits) through a 2 MB-cut proxy: plain git fails, sabr matches `ls-remote` | CI `real-network` job |
 | Real Docker Hub `python:3.12-slim` through the same proxy, `docker load`, `docker run` | CI `real-network` job |
 | `--platform linux/arm64` from a multi-arch index | CI |
 | `sabr get` of a Node.js tarball through the proxy, verified against nodejs.org SHASUMS | CI |
