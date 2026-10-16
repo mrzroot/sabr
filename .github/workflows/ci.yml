@@ -1,0 +1,145 @@
+name: CI
+on:
+  push:
+    branches: [main]
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  test:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        go: [stable]
+        include:
+          - os: ubuntu-latest
+            go: '1.22'
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: ${{ matrix.go }}
+      - run: go vet ./...
+      - name: gofmt
+        if: runner.os == 'Linux'
+        run: test -z "$(gofmt -l .)"
+      - run: go test -count=1 ./...
+
+  real-network:
+    # real GitHub, real Docker Hub, real nodejs.org — through a proxy that cuts every connection
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: stable
+      - run: go build -o /usr/local/bin/sabr ./cmd/sabr && sabr version
+      - name: start a connection that drops every ~2 MB
+        run: |
+          nohup sabr chaos --listen 127.0.0.1:8899 --cut 2MB > chaos.log 2>&1 &
+          sleep 1
+      - name: plain git clone through it fails
+        run: |
+          if timeout 300 git -c http.proxy=http://127.0.0.1:8899 clone -q https://github.com/cli/cli plain; then
+            echo "::error::plain git survived the flaky proxy; the test proves nothing"; exit 1
+          fi
+          echo "plain git failed as expected"
+      - name: sabr clone through it succeeds
+        env:
+          HTTPS_PROXY: http://127.0.0.1:8899
+        run: |
+          sabr clone https://github.com/cli/cli viasabr
+          cd viasabr
+          test -z "$(git status --porcelain)"
+          want=$(git ls-remote https://github.com/cli/cli refs/heads/trunk | cut -f1)
+          test "$(git rev-parse HEAD)" = "$want"
+          test "$(git rev-list --count HEAD)" -gt 5000
+          git tag | grep -q '^v2\.'
+          git log -p -1 --stat > /dev/null   # old versions arrive on demand
+      - name: sabr docker pull through it, then docker load and run
+        env:
+          HTTPS_PROXY: http://127.0.0.1:8899
+        run: |
+          sabr docker pull python:3.12-slim --load
+          docker run --rm python:3.12-slim python -c "print('python from a resumed pull')"
+          sabr docker pull alpine:3.20 --platform linux/arm64 -o alpine-arm64.tar
+          tar tf alpine-arm64.tar | grep -q index.json
+      - name: sabr get through it, verified against nodejs.org SHASUMS
+        env:
+          HTTPS_PROXY: http://127.0.0.1:8899
+        run: |
+          v=v24.21.0
+          curl -fsSL https://nodejs.org/dist/$v/SHASUMS256.txt -o sums
+          sum=$(grep " node-$v-linux-x64.tar.xz\$" sums | cut -d' ' -f1)
+          sabr get https://nodejs.org/dist/$v/node-$v-linux-x64.tar.xz --sha256 "$sum"
+      - name: proxy log
+        if: always()
+        run: tail -n 5 chaos.log; grep -c "cut " chaos.log || true
+
+  installer-unix:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: stable
+      - name: build release assets
+        run: |
+          if [ "$RUNNER_OS" = macOS ]; then sed -i '' 's/sha256sum sabr_\*/shasum -a 256 sabr_*/' scripts/build.sh; fi
+          sh scripts/build.sh 0.0.0-ci
+      - name: curl | sh into a fresh HOME
+        run: |
+          h=$(mktemp -d)
+          cat docs/install.sh | env -i HOME="$h" PATH=/usr/bin:/bin:/usr/sbin:/sbin SABR_BASE_URL="file://$PWD/dist" sh
+          test "$("$h/.local/bin/sabr" version)" = 0.0.0-ci
+          grep -q '.local/bin' "$h/.profile"
+      - name: a tampered binary is refused
+        run: |
+          printf 'evil' >> dist/sabr_*_$( [ "$(uname -m)" = arm64 ] && echo arm64 || echo amd64 )
+          h=$(mktemp -d)
+          if env -i HOME="$h" PATH=/usr/bin:/bin SABR_BASE_URL="file://$PWD/dist" sh docs/install.sh; then echo "::error::tampered binary installed"; exit 1; fi
+
+  installer-windows:
+    strategy:
+      fail-fast: false
+      matrix:
+        shell: [pwsh, powershell]
+    runs-on: windows-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        shell: ${{ matrix.shell }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: stable
+      - name: build windows asset
+        run: |
+          New-Item -ItemType Directory -Force dist | Out-Null
+          $env:CGO_ENABLED = '0'
+          go build -ldflags "-X main.version=0.0.0-ci" -o dist/sabr_windows_amd64.exe ./cmd/sabr
+          $h = (Get-FileHash -Algorithm SHA256 dist/sabr_windows_amd64.exe).Hash.ToLower()
+          Set-Content -Encoding ASCII dist/SHA256SUMS "$h  sabr_windows_amd64.exe"
+      - name: irm | iex
+        run: |
+          $env:SABR_BASE_URL = (Resolve-Path dist).Path
+          $env:SABR_BIN_DIR = Join-Path $env:RUNNER_TEMP 'sabr-bin'
+          Get-Content -Raw docs/install.ps1 | Invoke-Expression
+          $v = & (Join-Path $env:SABR_BIN_DIR 'sabr.exe') version
+          if ($v -ne '0.0.0-ci') { throw "bad version $v" }
+          if (-not ([Environment]::GetEnvironmentVariable('Path', 'User') -split ';' -contains $env:SABR_BIN_DIR)) { throw 'user PATH not updated' }
+      - name: published install.ps1 arrives as text
+        continue-on-error: true
+        run: |
+          $c = irm https://mrzroot.github.io/sabr/install.ps1
+          if ($c -isnot [string] -or $c -notmatch 'sabr one-line installer') { throw 'not a script string' }
