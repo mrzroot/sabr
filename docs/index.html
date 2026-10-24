@@ -13,7 +13,7 @@
 (function(){var t=localStorage.getItem('sabr-theme');if(!t)t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.dataset.theme=t;
 var l=localStorage.getItem('sabr-lang')||((navigator.language||'').slice(0,2)==='fa'?'fa':'en');if(l==='fa'){document.documentElement.lang='fa';document.documentElement.dir='rtl';}})();
 </script>
-</head>
+<link rel="preload" href="fonts/marcellus-400.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="identity.css"></head>
 <body>
 <div class="sky" aria-hidden="true"><div class="stars"></div><svg class="dunes" viewBox="0 0 1440 320" preserveAspectRatio="none"><path class="d1" d="M0 220c180-60 360-80 560-40s380 70 560 20 260-60 320-50v170H0z"/><path class="d2" d="M0 260c200-30 420-40 640-10s420 40 580 10 200-20 220-20v80H0z"/></svg></div>
 <a class="skip" href="#race" data-i18n="skip">Skip to the demo</a>
@@ -142,5 +142,5 @@ fatal: fetch-pack: invalid index-pack output</span>              <span class="c"
   <span><a href="https://github.com/mrzroot/sabr">GitHub</a> · <a href="https://github.com/mrzroot/sabr/blob/main/README.fa.md">README فارسی</a> · <a href="https://mrzroot.github.io/">mrzroot.github.io</a></span>
 </footer>
 <script src="site.js"></script>
-</body>
+<script src="fx.js" defer></script></body>
 </html>

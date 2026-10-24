@@ -1,0 +1,20 @@
+/* sabr identity: "dunes". Dusk coral / oasis teal (light), starlit indigo (dark). Marcellus. Parallax dunes, wind-blown sand, a patient caravan that stops and resumes. */
+@font-face{font-family:'Marcellus';src:url(fonts/marcellus-400.woff2) format('woff2');font-weight:400;font-display:swap}
+html[data-theme=light]{--sky1:#fff0dc;--sky2:#ffd0b0;--sky3:#ff9f84;--dune1:#e9795a;--dune2:#b9473f;--bg:#fff3e8;--accent:#0b6e6a;--accent2:#c2410c;--line:#f0cdb4}
+h1,h2,.brand b{font-family:Marcellus,Vazirmatn,Georgia,serif;font-weight:400}
+h1{letter-spacing:-.02em;font-size:clamp(40px,7.4vw,104px);line-height:1}
+h1 span{background:linear-gradient(95deg,var(--accent),var(--accent2),var(--accent));background-size:220% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;animation:drift 9s linear infinite}
+@keyframes drift{to{background-position:220% 0}}
+html[data-lang=fa] h1,html[lang=fa] h1,html[data-lang=fa] h2,html[lang=fa] h2{font-family:Vazirmatn,sans-serif;font-weight:800;line-height:1.3}
+h2{letter-spacing:-.01em;font-size:clamp(30px,4.6vw,54px)}
+h2::after{content:'';display:block;width:84px;height:8px;margin-top:12px;background:radial-gradient(circle at 4px 4px,var(--accent) 3px,transparent 4px) 0 0/16px 8px repeat-x;opacity:.8}
+.sky canvas.fx{position:absolute;inset:0;width:100%;height:100%}
+.sky .dunes,.sky .stars{opacity:0}
+html[data-theme=dark] .sky .stars{opacity:1}
+.btn,.copy,.tog{transition:transform .2s,box-shadow .2s}
+.btn:hover{transform:translateY(-3px);box-shadow:0 12px 24px -10px var(--accent)}
+.card,.lane,.cards>*,.term{backdrop-filter:blur(6px)}
+.lane .fill{background:linear-gradient(90deg,var(--accent),var(--accent2))!important;background-size:200% 100%}
+.lane.sabr .fill{animation:drift 3s linear infinite}
+.top{backdrop-filter:blur(14px)}
+@media(prefers-reduced-motion:reduce){h1 span,.lane.sabr .fill{animation:none}}
