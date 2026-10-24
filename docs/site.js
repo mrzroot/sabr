@@ -48,7 +48,6 @@
     labels(); paint();
   }
   $('#lang').onclick = function () { var fa = lang() !== 'fa'; root.lang = fa ? 'fa' : 'en'; root.dir = fa ? 'rtl' : 'ltr'; localStorage.setItem('sabr-lang', root.lang); applyLang(); };
-  $('#theme').onclick = function () { var n = root.dataset.theme === 'dark' ? 'light' : 'dark'; root.dataset.theme = n; localStorage.setItem('sabr-theme', n); };
 
   $$('.tabs button').forEach(function (b) { b.onclick = function () { $$('.tabs button').forEach(function (x) { x.setAttribute('aria-selected', x === b); }); $('#cmd').textContent = b.dataset.cmd; }; });
   if (/Win/.test(navigator.platform || navigator.userAgent)) $$('.tabs button')[1].click();

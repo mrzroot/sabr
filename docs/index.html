@@ -2,6 +2,7 @@
 <html lang="en" dir="ltr" data-theme="light">
 <head>
 <meta charset="utf-8">
+<meta name="color-scheme" content="light dark">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>sabr · downloads that never start over</title>
 <meta name="description" content="sabr makes git clone, docker pull and file downloads resumable on slow, throttled and unreliable connections. A drop costs seconds, not the whole download. Open source, single binary.">
@@ -9,11 +10,16 @@
 <meta property="og:description" content="Resumable git clone, docker pull and downloads for bad networks. Plain git fails through a link that drops every 2 MB; sabr finishes.">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="site.css">
+<meta name="theme-color" content="#130e2a" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#fff3e8" media="(prefers-color-scheme: light)">
 <script>
-(function(){var t=localStorage.getItem('sabr-theme');if(!t)t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.dataset.theme=t;
+(function(){var m0='system';try{m0=localStorage.getItem('mrz-theme')||'system'}catch(e){}if(m0!=='light'&&m0!=='dark')m0='system';var t=m0==='system'?(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'):m0;document.documentElement.dataset.theme=t;document.documentElement.setAttribute('data-theme-mode',m0);document.documentElement.style.colorScheme=t;
 var l=localStorage.getItem('sabr-lang')||((navigator.language||'').slice(0,2)==='fa'?'fa':'en');if(l==='fa'){document.documentElement.lang='fa';document.documentElement.dir='rtl';}})();
 </script>
-<link rel="preload" href="fonts/marcellus-400.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="identity.css"></head>
+<link rel="preload" href="fonts/marcellus-400.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="identity.css"><style>/*mrz-theme-badge*/[data-theme-toggle]{position:relative}
+html[data-theme-mode=system] [data-theme-toggle]::after{content:"A";position:absolute;inset-inline-end:-3px;bottom:-3px;min-width:13px;height:13px;padding:0 2px;box-sizing:border-box;border-radius:7px;font:700 8px/13px system-ui,sans-serif;letter-spacing:0;text-align:center;background:#14181f;color:#fff;box-shadow:0 0 0 1px rgba(255,255,255,.55);pointer-events:none}
+html[data-theme=dark][data-theme-mode=system] [data-theme-toggle]::after{background:#f3f4f6;color:#14181f;box-shadow:0 0 0 1px rgba(0,0,0,.5)}</style>
+</head>
 <body>
 <div class="sky" aria-hidden="true"><div class="stars"></div><svg class="dunes" viewBox="0 0 1440 320" preserveAspectRatio="none"><path class="d1" d="M0 220c180-60 360-80 560-40s380 70 560 20 260-60 320-50v170H0z"/><path class="d2" d="M0 260c200-30 420-40 640-10s420 40 580 10 200-20 220-20v80H0z"/></svg></div>
 <a class="skip" href="#race" data-i18n="skip">Skip to the demo</a>
@@ -22,7 +28,7 @@ var l=localStorage.getItem('sabr-lang')||((navigator.language||'').slice(0,2)===
   <nav class="nav" aria-label="Sections"><a href="#race" data-i18n="nav.demo">Demo</a><a href="#install" data-i18n="nav.install">Install</a><a href="#how" data-i18n="nav.how">How</a><a href="#proof" data-i18n="nav.proof">Proof</a><a href="https://github.com/mrzroot/sabr">GitHub</a></nav>
   <div class="toggles">
     <button class="tog" id="lang" type="button" aria-label="فارسی / English"><span class="en-only">فا</span><span class="fa-only">EN</span></button>
-    <button class="tog" id="theme" type="button" aria-label="Toggle light and dark"><svg class="sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 1.5v3M12 19.5v3M1.5 12h3M19.5 12h3M4.6 4.6l2.1 2.1M17.3 17.3l2.1 2.1M4.6 19.4l2.1-2.1M17.3 6.7l2.1-2.1"/></svg><svg class="moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"/></svg></button>
+    <button class="tog" id="theme" data-theme-toggle type="button" aria-label="Toggle light and dark"><svg class="sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 1.5v3M12 19.5v3M1.5 12h3M19.5 12h3M4.6 4.6l2.1 2.1M17.3 17.3l2.1 2.1M4.6 19.4l2.1-2.1M17.3 6.7l2.1-2.1"/></svg><svg class="moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"/></svg></button>
   </div>
 </header>
 
@@ -142,5 +148,27 @@ fatal: fetch-pack: invalid index-pack output</span>              <span class="c"
   <span><a href="https://github.com/mrzroot/sabr">GitHub</a> · <a href="https://github.com/mrzroot/sabr/blob/main/README.fa.md">README فارسی</a> · <a href="https://mrzroot.github.io/">mrzroot.github.io</a></span>
 </footer>
 <script src="site.js"></script>
-<script src="fx.js" defer></script></body>
+<script src="fx.js" defer></script><script>/*mrz-theme-toggle v2*/(function(){if(window.__mrzTheme)return;window.__mrzTheme=1;
+var d=document.documentElement,K='mrz-theme',q=window.matchMedia?matchMedia('(prefers-color-scheme: dark)'):null;
+function fa(){return d.getAttribute('data-lang')==='fa'||d.lang==='fa'}
+function get(){var m=null;try{m=localStorage.getItem(K)}catch(e){}return m==='light'||m==='dark'?m:'system'}
+function res(m){return m==='system'?(q&&q.matches?'dark':'light'):m}
+var metas=[].slice.call(document.querySelectorAll('meta[name="theme-color"]'));
+metas.forEach(function(x){x.setAttribute('data-c',x.getAttribute('content'));x.setAttribute('data-m',x.getAttribute('media')||'')});
+function tc(t,m){metas.forEach(function(x){if(m==='system'){x.setAttribute('content',x.getAttribute('data-c'));if(x.getAttribute('data-m'))x.setAttribute('media',x.getAttribute('data-m'))}else{var s=metas.filter(function(y){return /dark/.test(y.getAttribute('data-m'))===(t==='dark')})[0]||x;x.setAttribute('content',s.getAttribute('data-c'));x.removeAttribute('media')}})}
+var L={en:{system:'Theme: automatic, follows your system. Click for light',light:'Theme: light. Click for dark',dark:'Theme: dark. Click for automatic'},fa:{system:'پوسته: خودکار (مطابق سیستم). برای حالت روشن کلیک کنید',light:'پوسته: روشن. برای حالت تیره کلیک کنید',dark:'پوسته: تیره. برای حالت خودکار کلیک کنید'}};
+function sync(){var m=d.getAttribute('data-theme-mode')||'system',s=L[fa()?'fa':'en'][m],t=d.getAttribute('data-theme')==='dark'?'dark':'light';
+document.querySelectorAll('[data-theme-toggle]').forEach(function(x){x.setAttribute('aria-label',s);x.title=s;x.removeAttribute('aria-pressed')});
+document.querySelectorAll('picture source[media*="prefers-color-scheme"]').forEach(function(x){if(!x.getAttribute('data-mq'))x.setAttribute('data-mq',x.media);var wd=/dark/.test(x.getAttribute('data-mq'));x.media=(wd===(t==='dark'))?'all':'not all'})}
+function apply(m,save){var t=res(m);if(save){try{if(m==='system')localStorage.removeItem(K);else localStorage.setItem(K,m)}catch(e){}}
+d.setAttribute('data-theme',t);d.setAttribute('data-theme-mode',m);d.style.colorScheme=t;tc(t,m);sync();try{document.dispatchEvent(new CustomEvent('mrz-theme',{detail:t,mode:m}))}catch(e){}}
+var NX={system:'light',light:'dark',dark:'system'};
+document.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('[data-theme-toggle]');if(!b)return;apply(NX[get()],true)});
+function onq(){if(get()==='system')apply('system',false)}
+if(q){if(q.addEventListener)q.addEventListener('change',onq);else if(q.addListener)q.addListener(onq)}
+window.addEventListener('storage',function(e){if(e.key===K||e.key===null)apply(get(),false)});
+window.addEventListener('pageshow',function(e){if(e.persisted)apply(get(),false)});
+if(window.MutationObserver)new MutationObserver(sync).observe(d,{attributes:true,attributeFilter:['data-lang','lang']});
+/* normalise whatever the boot script set */apply(get(),false)})();</script>
+</body>
 </html>
