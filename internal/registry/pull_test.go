@@ -24,8 +24,13 @@ import (
 	"github.com/mrzroot/sabr/internal/ui"
 )
 
-func digest(b []byte) string { s := sha256.Sum256(b); return "sha256:" + hex.EncodeToString(s[:]) }
+// digest is the OCI content address of b: "sha256:" plus the hex SHA-256.
+func digest(b []byte) string {
+	s := sha256.Sum256(b)
+	return "sha256:" + hex.EncodeToString(s[:])
+}
 
+// layer builds a gzipped tar holding one random file of `size` bytes (seeded by size, so it is reproducible).
 func layer(t *testing.T, name string, size int) []byte {
 	var raw bytes.Buffer
 	tw := tar.NewWriter(&raw)
@@ -42,6 +47,8 @@ func layer(t *testing.T, name string, size int) []byte {
 }
 
 // fakeRegistry speaks enough of the distribution API: Bearer auth, an index, a manifest, blobs with ranges.
+// It returns the server, the blobs by digest, and the manifest digest. The index lists an arm64 manifest that does
+// not exist next to the real amd64 one, so a client that picks the wrong platform fails.
 func fakeRegistry(t *testing.T) (*httptest.Server, map[string][]byte, string) {
 	blobs := map[string][]byte{}
 	l1, l2 := layer(t, "a.bin", 900<<10), layer(t, "b.bin", 1200<<10)
