@@ -1,3 +1,4 @@
+// Tests for the resumable downloader: a local HTTP server behind a proxy that cuts connections mid-body.
 package httpx
 
 import (
@@ -21,8 +22,13 @@ import (
 	"github.com/mrzroot/sabr/internal/ui"
 )
 
-func quietUI() *ui.UI { u := ui.New(); u.Quiet = true; return u }
+func quietUI() *ui.UI {
+	u := ui.New()
+	u.Quiet = true
+	return u
+}
 
+// payload returns n deterministic pseudo-random bytes and their SHA-256 (hex).
 func payload(n int) ([]byte, string) {
 	b := make([]byte, n)
 	rand.New(rand.NewSource(7)).Read(b)
@@ -30,6 +36,8 @@ func payload(n int) ([]byte, string) {
 	return b, hex.EncodeToString(s[:])
 }
 
+// serve answers any path with b (404 for /missing) and an ETag. With ranges=false it drops the Range header,
+// emulating a server that cannot resume, so the client has to restart from zero.
 func serve(b []byte, ranges bool) *httptest.Server {
 	return httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		if r.URL.Path == "/missing" {
@@ -44,6 +52,7 @@ func serve(b []byte, ranges bool) *httptest.Server {
 	}))
 }
 
+// viaProxy returns an HTTP client whose every connection goes through a proxy that cuts it after ~cut bytes.
 func viaProxy(t *testing.T, cut int64) (*http.Client, *chaos.Proxy) {
 	p := &chaos.Proxy{Cut: cut}
 	addr, err := p.Listen("127.0.0.1:0")
@@ -55,6 +64,7 @@ func viaProxy(t *testing.T, cut int64) (*http.Client, *chaos.Proxy) {
 	return &http.Client{Transport: &http.Transport{Proxy: http.ProxyURL(pu), DisableKeepAlives: true}}, p
 }
 
+// fast is a retry policy with millisecond back-off so many drops stay quick.
 func fast() retry.Policy {
 	return retry.Policy{Max: 200, Base: time.Millisecond, Cap: 5 * time.Millisecond}
 }
