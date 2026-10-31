@@ -1,4 +1,4 @@
-/* sabr identity: "dunes". Dusk coral / oasis teal (light), starlit indigo (dark). Marcellus. Parallax dunes, wind-blown sand, a patient caravan that stops and resumes. */
+/* sabr identity: "dunes". Dusk coral / warm sand (light), starlit indigo (dark). Marcellus. Parallax dunes, wind-blown sand, a patient caravan that stops and resumes. */
 @font-face{font-family:'Marcellus';src:url(fonts/marcellus-400.woff2) format('woff2');font-weight:400;font-display:swap}
 html[data-theme=light]{--sky1:#fff0dc;--sky2:#ffd0b0;--sky3:#ff9f84;--dune1:#e9795a;--dune2:#b9473f;--bg:#fff3e8;--accent:#6e460b;--accent2:#c2410c;--line:#f0cdb4}
 h1,h2,.brand b{font-family:Marcellus,Vazirmatn,Georgia,serif;font-weight:400}
