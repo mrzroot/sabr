@@ -1,3 +1,5 @@
+<p align="center"><img src="docs/banner.svg" alt="sabr (صبر): downloads that never start over" width="100%"></p>
+
 <div dir="rtl">
 
 # صبر · sabr
