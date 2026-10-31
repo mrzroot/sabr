@@ -10,10 +10,18 @@ Resumable `git clone`, `docker pull` and file downloads for slow, throttled and 
 [![CI](https://github.com/mrzroot/sabr/actions/workflows/ci.yml/badge.svg)](https://github.com/mrzroot/sabr/actions/workflows/ci.yml)
 [![Release](https://img.shields.io/github/v/release/mrzroot/sabr)](https://github.com/mrzroot/sabr/releases)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
+![Go 1.22+](https://img.shields.io/badge/go-1.22%2B-00ADD8)
 
-[Website](https://mrzroot.github.io/sabr/) · [فارسی](README.fa.md) · [Releases](https://github.com/mrzroot/sabr/releases)
+[Website](https://mrzroot.github.io/sabr/) · [فارسی](README.fa.md) · [Releases](https://github.com/mrzroot/sabr/releases) · [Changelog](CHANGELOG.md) · [Contributing](CONTRIBUTING.md)
 
 </div>
+
+### ⚡ Quickstart
+
+```sh
+curl -fsSL https://mrzroot.github.io/sabr/install.sh | sh
+sabr clone https://github.com/cli/cli    # if the link drops, run the same command again: it continues
+```
 
 ```text
 $ git -c http.proxy=http://127.0.0.1:8899 clone https://github.com/cli/cli     # a link that drops every ~2 MB
@@ -180,5 +188,13 @@ go test ./...            # unit + end-to-end tests (needs git; uses git daemon l
 go build ./cmd/sabr
 sh scripts/build.sh 0.1.0   # cross-compiled release binaries + SHA256SUMS in dist/
 ```
+
+## Contributing
+
+Bug reports, ideas and pull requests are welcome, in English or Persian. Start with
+[CONTRIBUTING.md](CONTRIBUTING.md) (setup, where the code lives, how to test) and the
+[issue forms](https://github.com/mrzroot/sabr/issues/new/choose). Release history is in [CHANGELOG.md](CHANGELOG.md).
+
+## License
 
 MIT © [Mohammadreza Zare (M-R-Z)](https://github.com/mrzroot)
