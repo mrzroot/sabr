@@ -19,6 +19,8 @@ var l=localStorage.getItem('sabr-lang')||'fa';if(l==='fa'){document.documentElem
 <link rel="preload" href="fonts/marcellus-400.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="identity.css"><style>/*mrz-theme-badge*/[data-theme-toggle]{position:relative}
 html[data-theme-mode=system] [data-theme-toggle]::after{content:"A";position:absolute;inset-inline-end:-3px;bottom:-3px;min-width:13px;height:13px;padding:0 2px;box-sizing:border-box;border-radius:7px;font:700 8px/13px system-ui,sans-serif;letter-spacing:0;text-align:center;background:#14181f;color:#fff;box-shadow:0 0 0 1px rgba(255,255,255,.55);pointer-events:none}
 html[data-theme=dark][data-theme-mode=system] [data-theme-toggle]::after{background:#f3f4f6;color:#14181f;box-shadow:0 0 0 1px rgba(0,0,0,.5)}</style>
+<link rel="stylesheet" href="mx.css">
+<style id="mx-tokens">:root{--mx-acc:var(--accent);--mx-acc-t:#9a3412;--mx-on-acc:#fff;--mx-fg:var(--ink);--mx-mut:var(--muted);--mx-card:var(--card-solid);--mx-line:var(--line);--mx-mono:var(--mono);--mx-r:var(--r)}html[data-theme=dark]{--mx-acc-t:var(--accent)}@media (prefers-color-scheme:dark){html:not([data-theme]){--mx-acc-t:var(--accent)}}.mx-sec>h2{font-family:Marcellus,serif;font-weight:400}</style>
 </head>
 <body>
 <div class="sky" aria-hidden="true"><div class="stars"></div><svg class="dunes" viewBox="0 0 1440 320" preserveAspectRatio="none"><path class="d1" d="M0 220c180-60 360-80 560-40s380 70 560 20 260-60 320-50v170H0z"/><path class="d2" d="M0 260c200-30 420-40 640-10s420 40 580 10 200-20 220-20v80H0z"/></svg></div>
@@ -53,6 +55,9 @@ html[data-theme=dark][data-theme-mode=system] [data-theme-toggle]::after{backgro
   </div>
 </section>
 
+
+<!-- mx: one-sentence "what is it" -->
+<section class="mx mx-sec mx-one" aria-label="What it is"><span class="mx-kick"><span lang="en">In one sentence</span><span lang="fa">در یک جمله</span></span><p lang="en">sabr downloads like <mark>a patient traveller</mark>: it moves in small steps and remembers where it stopped, so when the connection drops, git clone, docker pull or a big file carries on instead of starting from zero.</p><p lang="fa" dir="rtl">صبر مثل <mark>یک مسافر صبور</mark> دانلود می‌کند: قدم‌به‌قدم جلو می‌رود و یادش می‌ماند کجا ایستاده؛ پس وقتی اینترنت قطع می‌شود، git clone، docker pull یا یک فایل بزرگ از همان‌جا ادامه پیدا می‌کند، نه از صفر.</p></section>
 <section class="race" id="race">
   <div class="head">
     <h2 data-i18n="race.title">Race them on a bad link</h2>
@@ -90,7 +95,7 @@ html[data-theme=dark][data-theme-mode=system] [data-theme-toggle]::after{backgro
 
 <section class="how" id="how">
   <h2 data-i18n="how.title">How sabr clone works</h2>
-  <ol class="steps">
+  <ol class="mx-steps steps">
     <li><b>1</b><h3 data-i18n="how.s1t">Latest commit</h3><p data-i18n="how.s1">A blobless, depth-1 fetch: just commits and folders, a few hundred KB.</p></li>
     <li><b>2</b><h3 data-i18n="how.s2t">History, in steps</h3><p data-i18n="how.s2">It deepens history step by step. The step size doubles after a success and halves after a drop.</p></li>
     <li><b>3</b><h3 data-i18n="how.s3t">Files, in batches</h3><p data-i18n="how.s3">It lists the missing blobs and fetches them in adaptive batches. Any file that keeps failing is downloaded by byte range and hash-checked.</p></li>
@@ -142,6 +147,12 @@ fatal: fetch-pack: invalid index-pack output</span>              <span class="c"
     <li data-i18n="v.4">Tests on Linux, macOS and Windows; installers tested in a fresh HOME and on PowerShell 5.1 and 7; a tampered binary is refused.</li>
   </ul>
 </section>
+
+<!-- mx: latest release (real tag; refreshed from the GitHub API when online) -->
+<section class="mx mx-sec" id="release" aria-labelledby="mx-rel-h"><span class="mx-kick"><span class="mx-live" aria-hidden="true"></span><span lang="en">Latest release</span><span lang="fa">آخرین نسخه</span></span><h2 id="mx-rel-h"><span lang="en">Ready to install</span><span lang="fa">آمادهٔ نصب</span></h2><div class="mx-rel" data-repo="sabr" data-mx><div class="mx-ver" data-mx-ver>v0.1.0</div><div class="mx-meta"><span lang="en">Published <b data-mx-date data-iso="2026-10-16T18:22:00Z" lang="en">2026-10-16</b>. Includes single binaries for Linux, macOS, Windows and FreeBSD, with SHA256SUMS.</span><span lang="fa">منتشرشده در <b data-mx-date data-iso="2026-10-16T18:22:00Z" lang="fa">2026-10-16</b>. شامل فایل اجرایی تکی برای لینوکس، مک، ویندوز و FreeBSD، همراه SHA256SUMS.</span></div><div class="mx-btns"><a class="mx-btn p" data-mx-link href="https://github.com/mrzroot/sabr/releases/tag/v0.1.0"><span lang="en">Release notes</span><span lang="fa">یادداشت انتشار</span></a><a class="mx-btn" href="https://github.com/mrzroot/sabr/blob/main/CHANGELOG.md"><span lang="en">Changelog</span><span lang="fa">تغییرات</span></a><a class="mx-btn" href="https://github.com/mrzroot/sabr/releases"><span lang="en">All releases</span><span lang="fa">همهٔ نسخه‌ها</span></a></div></div></section>
+
+<!-- mx: FAQ (answers from the README) -->
+<section class="mx mx-sec" id="faq" aria-labelledby="mx-faq-h"><span class="mx-kick">FAQ</span><h2 id="mx-faq-h"><span lang="en">Questions people ask</span><span lang="fa">پرسش‌های پرتکرار</span></h2><div class="mx-faq" data-mx><details><summary><span lang="en">Does sabr bypass filtering or sanctions?</span><span lang="fa">صبر فیلترینگ یا تحریم را دور می‌زند؟</span></summary><div class="mx-ans"><span lang="en">No. It makes the connection you already have go further: it downloads in small pieces and keeps every piece that arrived.</span><span lang="fa">نه. همان اینترنتی را که دارید بیشتر به کار می‌گیرد: تکه‌تکه دانلود می‌کند و هر تکه‌ای را که رسید نگه می‌دارد.</span></div></details><details><summary><span lang="en">What if my laptop restarts halfway?</span><span lang="fa">اگر وسط کار لپ‌تاپم خاموش شد چه؟</span></summary><div class="mx-ans"><span lang="en">Run the same command again. sabr continues from the last piece it saved instead of starting over.</span><span lang="fa">همان دستور را دوباره اجرا کنید. صبر از آخرین تکه‌ای که ذخیره کرده ادامه می‌دهد و از اول شروع نمی‌کند.</span></div></details><details><summary><span lang="en">Is it slower on a good connection?</span><span lang="fa">روی اینترنت خوب کندتر است؟</span></summary><div class="mx-ans"><span lang="en">A little. It makes many small requests instead of one big one. On a bad connection that is the difference between finishing and not.</span><span lang="fa">کمی. به جای یک درخواست بزرگ، چندین درخواست کوچک می‌فرستد. روی اینترنت بد، همین فرقِ تمام شدن و نشدن است.</span></div></details><details><summary><span lang="en">Does it work with Docker and Podman?</span><span lang="fa">با داکر و پادمن کار می‌کند؟</span></summary><div class="mx-ans"><span lang="en">Yes. <code>sabr docker pull IMAGE --load</code> sends the image straight into Docker or Podman. It works with Docker Hub and other registries.</span><span lang="fa">بله. <code>sabr docker pull IMAGE --load</code> ایمیج را مستقیم به داکر یا پادمن می‌دهد. با Docker Hub و رجیستری‌های دیگر کار می‌کند.</span></div></details><details><summary><span lang="en">Only GitHub, or any git host?</span><span lang="fa">فقط گیت‌هاب یا هر سرور گیتی؟</span></summary><div class="mx-ans"><span lang="en">Any git host. One limit: a single huge file inside a repository arrives over git in one piece. For github.com sabr fetches such a file in byte ranges; other hosts need the connection to last for that one file.</span><span lang="fa">هر سرور گیتی. یک محدودیت: یک فایل خیلی بزرگ داخل مخزن، از راه گیت یک‌تکه می‌رسد. برای github.com صبر چنین فایلی را بازه‌به‌بازه می‌گیرد؛ در سرورهای دیگر اتصال باید برای همان یک فایل دوام بیاورد.</span></div></details></div></section>
 </main>
 <footer class="foot">
   <span>sabr 0.1.0 · MIT · <a href="https://github.com/mrzroot">Mohammadreza Zare (M-R-Z)</a></span>
@@ -178,5 +189,6 @@ window.addEventListener('storage',function(e){if(e.key===K||e.key===null)apply(g
 window.addEventListener('pageshow',function(e){if(e.persisted)apply(get(),false)});
 if(window.MutationObserver)new MutationObserver(sync).observe(d,{attributes:true,attributeFilter:['data-lang','lang']});
 /* normalise whatever the boot script set */apply(get(),false)})();</script>
+<script src="mx.js" defer></script>
 </body>
 </html>
