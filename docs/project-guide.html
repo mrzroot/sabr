@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Pick the correct resume strategy without confusing history and files.">
+<title>sabr · Project guide / راهنمای پروژه</title>
+<style>
+:root{--ink:#202638;--brand:#543400;--pastel:#ffe2a4;font:1rem/1.6 system-ui,sans-serif;color:var(--ink);background:#f7f9fc}
+*{box-sizing:border-box}body{margin:0}a{color:inherit}a:focus-visible,pre:focus-visible{outline:3px solid #3569e2;outline-offset:4px}
+header{background:var(--brand);color:#fff;padding:2.5rem max(1.25rem,calc((100vw - 65rem)/2));border-bottom:.45rem solid var(--pastel)}
+header h1{font-size:clamp(2rem,8vw,4rem);margin:0;overflow-wrap:anywhere;line-height:1.15}header p{color:var(--pastel);margin:.45rem 0 1rem;font-size:1.1rem}
+nav{display:flex;flex-wrap:wrap;gap:.6rem 1rem}nav a{padding:.2rem .65rem;border:1px solid currentColor;border-radius:999px;text-decoration:none}
+nav a:hover{background:var(--pastel);color:var(--brand)}
+main{width:min(65rem,100% - 2.5rem);margin:2.5rem auto}section+section{margin-top:3rem}.intro span{font-size:.8rem;font-weight:700;color:var(--brand)}
+h2{font-size:clamp(1.4rem,4vw,2rem);line-height:1.3;margin:.25rem 0 1rem}.steps{padding:0;margin:0;display:grid;gap:.85rem;list-style:none;counter-reset:steps}
+.steps li{background:#fff;border:1px solid #d9e0ec;border-inline-start:5px solid var(--brand);border-radius:.75rem;padding:1rem 1.15rem;counter-increment:steps;min-width:0}
+h3{margin:0;line-height:1.3;font-size:1.1rem}h3::before{content:counter(steps);display:inline-grid;place-items:center;margin-inline-end:.5rem;background:var(--pastel);color:var(--brand);border-radius:50%;width:1.8rem;height:1.8rem}
+p{margin:.55rem 0}pre{overflow:auto;white-space:pre;font-size:.87rem;border-radius:.4rem;background:#202638;color:#fff;padding:.75rem;margin:.75rem 0 0}
+footer{padding:1.25rem;text-align:center;color:var(--brand);border-top:1px solid #d9e0ec}
+@media(min-width:52rem){.steps{grid-template-columns:repeat(3,minmax(0,1fr))}}
+</style>
+</head>
+<body><header><h1>sabr</h1><p lang="fa" dir="rtl" style="text-align:left">صبر · راهنمای پروژه</p>
+<nav aria-label="Page links"><a href="#en">English</a><a href="#fa" lang="fa">فارسی</a><a href="https://github.com/mrzroot/sabr">Source on GitHub</a><a href="https://github.com/mrzroot/sabr/releases">Releases</a><a href="./index.html">Project home</a></nav>
+</header><main><section id="en" lang="en" dir="ltr" aria-labelledby="title-en">
+<div class="intro"><span>PROJECT WALKTHROUGH</span><h2 id="title-en">Pick the correct resume strategy without confusing history and files.</h2></div>
+<ol class="steps"><li><h3>Repository interrupted</h3><p>Resume in the existing partial destination or rerun the same clone command. Do not delete the partial directory unless you intentionally want to start fresh.</p><pre dir="ltr" tabindex="0"><code>sabr resume ./your-checkout</code></pre></li>
+<li><h3>File interrupted</h3><p>Use the same URL and the known checksum from a trusted publisher. Range resume uses partial data; verify the final file before using it.</p><pre dir="ltr" tabindex="0"><code>sabr get URL --sha256 HEX</code></pre></li>
+<li><h3>Plan for offline history</h3><p>A regular clone prioritizes the latest checked-out files. If you need every historical file without a network later, request all blobs up front.</p><pre dir="ltr" tabindex="0"><code>sabr clone --all-blobs URL</code></pre></li></ol>
+</section>
+<section id="fa" lang="fa" dir="rtl" aria-labelledby="title-fa">
+<div class="intro"><span>راهنمای عملی پروژه</span><h2 id="title-fa">با توجه به نوع دانلود، روش درست ادامه‌دادن را انتخاب کنید.</h2></div>
+<ol class="steps"><li><h3>کلون قطع‌شده</h3><p>همان فرمان را تکرار کنید یا از مسیر مقصد قبلی ادامه دهید. اگر نمی‌خواهید از نو شروع کنید، پوشهٔ ناقص را پاک نکنید.</p><pre dir="ltr" tabindex="0"><code>sabr resume ./your-checkout</code></pre></li>
+<li><h3>دانلود فایل قطع‌شده</h3><p>همان نشانی و هش منتشرشده در منبع مطمئن را استفاده کنید و پیش از استفاده، فایل نهایی را راستی‌آزمایی کنید.</p><pre dir="ltr" tabindex="0"><code>sabr get URL --sha256 HEX</code></pre></li>
+<li><h3>تاریخچه برای استفادهٔ آفلاین</h3><p>کلون معمولی به فایل‌های نسخهٔ جاری اولویت می‌دهد؛ اگر همهٔ نسخه‌های تاریخی را آفلاین لازم دارید، همهٔ blobها را دریافت کنید.</p><pre dir="ltr" tabindex="0"><code>sabr clone --all-blobs URL</code></pre></li></ol>
+</section></main>
+<footer>Review guide · not a release / <span lang="fa" dir="rtl">راهنمای بازبینی؛ نه نسخهٔ منتشرشده</span></footer></body></html>

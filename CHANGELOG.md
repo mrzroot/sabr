@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- Added a bilingual project walkthrough with a practical, reproducible first-use workflow. Documentation only; no runtime changes.
+
 ## 0.1.0 (2026-10-16)
 
 First release.

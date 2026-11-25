@@ -14,6 +14,10 @@ Resumable `git clone`, `docker pull` and file downloads for slow, throttled and 
 
 [Website](https://mrzroot.github.io/sabr/) · [فارسی](README.fa.md) · [Releases](https://github.com/mrzroot/sabr/releases) · [Changelog](CHANGELOG.md) · [Contributing](CONTRIBUTING.md)
 
+
+
+[Project walkthrough · راهنمای عملی پروژه](docs/project-guide.html)
+
 </div>
 
 ### ⚡ Quickstart
