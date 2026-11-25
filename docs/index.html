@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" dir="ltr" data-theme="light">
+<html data-portfolio-design="sabr" lang="en" dir="ltr" data-theme="light">
 <head>
 <meta charset="utf-8">
 <meta name="color-scheme" content="light dark">
@@ -16,11 +16,12 @@
 (function(){var m0='system';try{m0=localStorage.getItem('mrz-theme')||'system'}catch(e){}if(m0!=='light'&&m0!=='dark')m0='system';var t=m0==='system'?(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'):m0;document.documentElement.dataset.theme=t;document.documentElement.setAttribute('data-theme-mode',m0);document.documentElement.style.colorScheme=t;
 var l=localStorage.getItem('sabr-lang')||'fa';if(l==='fa'){document.documentElement.lang='fa';document.documentElement.dir='rtl';}})();
 </script>
-<link rel="preload" href="fonts/marcellus-400.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="identity.css"><style>/*mrz-theme-badge*/[data-theme-toggle]{position:relative}
+<link rel="stylesheet" href="identity.css"><style>/*mrz-theme-badge*/[data-theme-toggle]{position:relative}
 html[data-theme-mode=system] [data-theme-toggle]::after{content:"A";position:absolute;inset-inline-end:-3px;bottom:-3px;min-width:13px;height:13px;padding:0 2px;box-sizing:border-box;border-radius:7px;font:700 8px/13px system-ui,sans-serif;letter-spacing:0;text-align:center;background:#14181f;color:#fff;box-shadow:0 0 0 1px rgba(255,255,255,.55);pointer-events:none}
 html[data-theme=dark][data-theme-mode=system] [data-theme-toggle]::after{background:#f3f4f6;color:#14181f;box-shadow:0 0 0 1px rgba(0,0,0,.5)}</style>
 <link rel="stylesheet" href="mx.css">
 <style id="mx-tokens">:root{--mx-acc:var(--accent);--mx-acc-t:#9a3412;--mx-on-acc:#fff;--mx-fg:var(--ink);--mx-mut:var(--muted);--mx-card:var(--card-solid);--mx-line:var(--line);--mx-mono:var(--mono);--mx-r:var(--r)}html[data-theme=dark]{--mx-acc-t:var(--accent)}@media (prefers-color-scheme:dark){html:not([data-theme]){--mx-acc-t:var(--accent)}}.mx-sec>h2{font-family:Marcellus,serif;font-weight:400}</style>
+<link rel="stylesheet" href="portfolio-reframe.css">
 </head>
 <body>
 <div class="sky" aria-hidden="true"><div class="stars"></div><svg class="dunes" viewBox="0 0 1440 320" preserveAspectRatio="none"><path class="d1" d="M0 220c180-60 360-80 560-40s380 70 560 20 260-60 320-50v170H0z"/><path class="d2" d="M0 260c200-30 420-40 640-10s420 40 580 10 200-20 220-20v80H0z"/></svg></div>
@@ -35,6 +36,20 @@ html[data-theme=dark][data-theme-mode=system] [data-theme-toggle]::after{backgro
 </header>
 
 <main>
+
+<!-- Portfolio design: localized overview; original project sections remain below. -->
+<aside class="rr-signal">
+  <div class="rr-annotation"><p class="rr-product"><bdi>sabr</bdi><span><span class="rr-en" lang="en">Resumable downloads</span><span class="rr-fa" lang="fa">دانلود ادامه‌پذیر</span></span></p>
+    <p class="rr-promise"><span class="rr-en" lang="en">A broken connection is a pause, not a restart</span><span class="rr-fa" lang="fa">قطع اتصال یعنی مکث، نه شروع دوباره</span></p>
+    <a class="rr-start" href="#race"><span class="rr-en" lang="en">Compare download recovery</span><span class="rr-fa" lang="fa">مقایسهٔ بازیابی دانلود</span> <span aria-hidden="true">↓</span></a>
+  </div>
+  <div class="rr-visual" aria-hidden="true">
+    <svg viewBox="0 0 360 100" width="360" height="100" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M57 57h146m35 0h67" stroke-dasharray="5 5"/><path d="M57 47H207m29 0h68" stroke-width="7"/><path d="M211 26l11 13-10 13 10 12-10 13"/><path d="m289 34 16 13-16 13"/><circle cx="86" cy="47" r="11" fill="currentColor"/><path d="M58 78h202" opacity=".45"/><path d="M80 74v8m58-8v8m60-8v8m60-8v8"/>
+    </svg>
+    <div class="rr-steps"><span><span class="rr-en" lang="en">Save</span><span class="rr-fa" lang="fa">ذخیره</span></span><span><span class="rr-en" lang="en">Pause</span><span class="rr-fa" lang="fa">مکث</span></span><span><span class="rr-en" lang="en">Resume</span><span class="rr-fa" lang="fa">ادامه</span></span></div>
+  </div>
+</aside>
 <section class="hero">
   <p class="kicker" data-i18n="hero.kicker">for slow, throttled and unreliable connections</p>
   <h1 data-i18n-html="hero.title">Downloads that<br><span>never start over.</span></h1>
@@ -192,3 +207,4 @@ if(window.MutationObserver)new MutationObserver(sync).observe(d,{attributes:true
 <script src="mx.js" defer></script>
 </body>
 </html>
+
