@@ -22,7 +22,7 @@ html[data-theme=dark][data-theme-mode=system] [data-theme-toggle]::after{backgro
 <link rel="stylesheet" href="mx.css">
 <style id="mx-tokens">:root{--mx-acc:var(--accent);--mx-acc-t:#9a3412;--mx-on-acc:#fff;--mx-fg:var(--ink);--mx-mut:var(--muted);--mx-card:var(--card-solid);--mx-line:var(--line);--mx-mono:var(--mono);--mx-r:var(--r)}html[data-theme=dark]{--mx-acc-t:var(--accent)}@media (prefers-color-scheme:dark){html:not([data-theme]){--mx-acc-t:var(--accent)}}.mx-sec>h2{font-family:Marcellus,serif;font-weight:400}</style>
 <link rel="stylesheet" href="portfolio-reframe.css">
-<link rel="stylesheet" href="/assets/studio-mark.css"></head>
+<link rel="stylesheet" href="/assets/studio-mark.css"><link rel="stylesheet" href="/assets/portfolio/embed.css"><script defer src="/assets/portfolio/exhibit.js"></script></head>
 <body>
 <div class="sky" aria-hidden="true"><div class="stars"></div><svg class="dunes" viewBox="0 0 1440 320" preserveAspectRatio="none"><path class="d1" d="M0 220c180-60 360-80 560-40s380 70 560 20 260-60 320-50v170H0z"/><path class="d2" d="M0 260c200-30 420-40 640-10s420 40 580 10 200-20 220-20v80H0z"/></svg></div>
 <a class="skip" href="#race" data-i18n="skip">Skip to the demo</a>
@@ -69,11 +69,32 @@ html[data-theme=dark][data-theme-mode=system] [data-theme-toggle]::after{backgro
     <div><span class="no">curl -O</span><span class="arrow">→</span><span class="yes">sabr get --sha256</span></div>
   </div>
 </section>
-<aside class="studio-project-entry" style="--entry-color:#8be1ab">
-  <img src="/assets/thumbs/sabr.webp" alt="" width="160" height="100" loading="lazy" decoding="async">
-  <div><strong>Resume the interrupted download</strong><small>Continue from the verified offset</small></div>
-  <a href="/playground/?project=sabr&amp;lang=en">Try the case ↗</a>
-</aside>
+<div class="atlas-embedded" data-motif="meter" style="--exhibit-hue:142"><section class="exhibit-studio" id="portfolio-example" data-project="sabr" data-motif="meter" data-state="0" aria-labelledby="portfolio-example-title">
+    <div class="exhibit-studio-head"><div><p class="exhibit-kicker"><span class="pf-en" lang="en">Illustrative sample</span><span class="pf-fa" lang="fa">دادهٔ نمونه</span></p><h2 id="portfolio-example-title"><span class="pf-en" lang="en">Change the measured scenario</span><span class="pf-fa" lang="fa">سناریوی اندازه‌گیری را تغییر بده</span></h2></div>
+       <a href="/projects/guide/sabr/"><span class="pf-en" lang="en">Interactive introduction</span><span class="pf-fa" lang="fa">معرفی تعاملی</span> <i class="exhibit-arrow" aria-hidden="true"></i></a></div>
+    <div class="exhibit-lab">
+      <div class="stage-picture" aria-hidden="true">
+        <div class="stage-sign"><i></i><i></i><i></i><strong dir="ltr">sabr</strong></div>
+
+        <div class="stage-track" dir="ltr"></div>
+        <div class="stage-evidence" dir="ltr"><span dir="auto">68% verified</span></div>
+      </div>
+      <div class="stage-work">
+        <p><span class="pf-en" lang="en">A fictional transfer stopped at 68%. The server supports range requests and the validator still matches.</span><span class="pf-fa" lang="fa">انتقال فرضی در ۶۸٪ قطع شد. سرور درخواست بازه‌دار را می‌پذیرد و شناسهٔ نسخه هنوز تطبیق دارد.</span></p>
+        <div class="stage-actions" role="group" aria-label="Example controls / کنترل‌های نمونه">
+          <button type="button" data-stage="1" aria-pressed="false"><span class="pf-en" lang="en">Continue from the verified offset</span><span class="pf-fa" lang="fa">از موقعیت تأییدشده ادامه بده</span><i class="exhibit-arrow" aria-hidden="true"></i></button><button type="button" data-stage="2" aria-pressed="false"><span class="pf-en" lang="en">Start again from zero</span><span class="pf-fa" lang="fa">از صفر شروع کن</span><i class="exhibit-arrow" aria-hidden="true"></i></button>
+        </div>
+        <output class="stage-result" aria-live="polite"><span class="pf-en" lang="en">Try a response to see its effect.</span><span class="pf-fa" lang="fa">یک کار را انتخاب کن و اثرش را ببین.</span></output>
+        <div class="stage-foot">
+          <button type="button" data-stage="0" aria-pressed="true"><span class="pf-en" lang="en">Reset example</span><span class="pf-fa" lang="fa">بازنشانی نمونه</span></button>
+          <input type="range" min="0" max="2" value="0" step="1" aria-label="Example position / مرحلهٔ نمونه">
+        </div>
+      </div>
+    </div>
+   </section>
+    <p class="exhibit-takeaway"><span class="pf-en" lang="en">Compare the validated offset, expected file size, and transferred bytes before and after resuming the example.</span><span class="pf-fa" lang="fa">موقعیت تأییدشده، حجم مورد انتظار فایل و تعداد بایت‌های منتقل‌شده را پیش و پس از ادامهٔ دانلود مقایسه کن.</span></p>
+    <script type="application/json" data-embed-project>{"entries":[{"id":"sabr","group":"systems","motif":"meter","color":"#8be1ab","title":["Resume the interrupted download","دانلود قطع‌شده را ادامه بده"],"brief":["A fictional transfer stopped at 68%. The server supports range requests and the validator still matches.","انتقال فرضی در ۶۸٪ قطع شد. سرور درخواست بازه‌دار را می‌پذیرد و شناسهٔ نسخه هنوز تطبیق دارد."],"actions":[["Continue from the verified offset","از موقعیت تأییدشده ادامه بده"],["Start again from zero","از صفر شروع کن"]],"outcomes":[["Only the remaining bytes need to be transferred in this example.","در این نمونه فقط بایت‌های باقی‌مانده منتقل می‌شوند."],["The already verified bytes are downloaded again.","بایت‌های قبلاً تأییدشده دوباره دانلود می‌شوند."]],"evidence":[["68% verified"],["68% retained","32% fetched"],["100% fetched again"]],"name":"sabr","kicker":["Resumable downloads","دانلود قابل ادامه"],"intro":["Resume supported downloads and development pulls after an unreliable connection drops, instead of always starting over.","بعد از قطعی ارتباط، دانلود و دریافت منابعِ پشتیبانی‌شده را ادامه دهید تا همیشه مجبور نباشید از اول شروع کنید."],"hint":["Use a disposable download you are allowed to retrieve. Interrupt it once and see whether the supported download resumes.","با یک فایل آزمایشی که اجازهٔ دریافتش را دارید شروع کنید. یک‌بار قطع کنید و ادامهٔ دانلود را بررسی کنید."],"site":"/sabr/","source":"https://github.com/mrzroot/sabr","layout":"dashboard","hue":142,"image":"/assets/thumbs/sabr.webp"}],"labels":{"map":["Project Atlas","اطلس پروژه‌ها"],"mapIntro":["Four ways to explore the projects. Choose a project to see what it does and open its interactive introduction.","چهار مسیر برای گشتن میان پروژه‌ها. یکی را انتخاب کن تا ببینی چه کار می‌کند و معرفی تعاملی‌اش را باز کنی."],"agents":["AI tooling","ابزارهای هوش مصنوعی"],"language":["Language and data","زبان و داده"],"systems":["Systems","سامانه‌ها"],"showcase":["Design and demos","طراحی و دمو"],"projects":["All projects","همهٔ پروژه‌ها"],"open":["Interactive introduction","معرفی تعاملی"],"test":["Try the example","نمونه را امتحان کن"],"story":["The situation","مسئله"],"reference":["Inspect the project","بررسی پروژه"],"source":["View source on GitHub","کد منبع در گیت‌هاب"],"demo":["Open project website","باز کردن سایت پروژه"],"guide":["Suggested first step","قدم اول پیشنهادی"],"sample":["Illustrative sample","دادهٔ نمونه"],"result":["What happens","نتیجه"],"choose":["Try a response to see its effect.","یک کار را انتخاب کن و اثرش را ببین."],"still":["Initial state","حالت اولیه"],"reset":["Reset example","بازنشانی نمونه"],"more":["Explore another project","یک پروژهٔ دیگر ببین"]}}</script>
+  </div>
 
 
 <!-- mx: one-sentence "what is it" -->
